@@ -13,42 +13,50 @@ public class Servidor {
         Socket sc = null;
         DataInputStream in;
         DataOutputStream out;
-        //puerto de nuestro servidor
         final int PUERTO = 5000;
         try {
-            //Creamos el socket del servidor
             servidor = new ServerSocket(PUERTO);
             System.out.println("Servidor iniciado");
-            //Siempre estara escuchando peticiones
             while (true) {
-                //Espero a que un cliente se conecte
                 sc = servidor.accept();
                 System.out.println("Cliente conectado");
+                
                 in = new DataInputStream(sc.getInputStream());
                 out = new DataOutputStream(sc.getOutputStream());
-                //Leo el mensaje que me envia
-                String mensaje = in.readUTF();
-
-                SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-MM-dd");
-                Date fecha = null;
-                try {
-                    fecha = formatoDelTexto.parse(mensaje);
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTime(fecha); 
-                    calendar.add(Calendar.DAY_OF_YEAR, 10);  
-                    fecha = calendar.getTime(); 
-                } catch (ParseException e) {
-                    System.out.println(e.getMessage());
-                }
                 
-                //Le envio un mensaje
-                out.writeUTF(fecha.toString());
-                //Cierro el socket
+                FileWriter flwriter = null;
+                flwriter = new FileWriter("/home/webdev/Documentos/prueba.txt");
+                BufferedWriter bfwriter = new BufferedWriter(flwriter);
+                
+                String mensaje = in.readUTF(); 
+                bfwriter.write("CLIENTE: fecha de hoy "+mensaje+"\n");
+                String fecha = agrega10DiasFechas(mensaje);
+                bfwriter.write("SERVIDOR: se le ha agregado 10 dias más "+fecha+"\n");
+                out.writeUTF(fecha);
+                mensaje = in.readUTF(); 
+                bfwriter.write("CLIENTE:  "+mensaje+"\n");
                 sc.close();
+                bfwriter.close();
+		System.out.println("Archivo creado satisfactoriamente..");
                 System.out.println("Cliente desconectado");
             }
         } catch (IOException ex) {
             Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public static String agrega10DiasFechas(String fechamensaje) {
+        SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-MM-dd");
+        Date fecha = null;
+        try {
+            fecha = formatoDelTexto.parse(fechamensaje);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(fecha);
+            calendar.add(Calendar.DAY_OF_YEAR, 10);
+            fecha = calendar.getTime();
+        } catch (ParseException e) {
+            System.out.println(e.getMessage());
+        }
+        return fecha.toString();
     }
 }

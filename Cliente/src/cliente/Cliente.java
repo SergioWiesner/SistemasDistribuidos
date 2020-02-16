@@ -23,12 +23,12 @@ public class Cliente {
             out = new DataOutputStream(sc.getOutputStream());
             //Envio un mensaje al cliente
             Date date = Calendar.getInstance().getTime();
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");  
-            
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");             
             out.writeUTF(dateFormat.format(date));
             //Recibo el mensaje del servidor
             String mensaje = in.readUTF();
             System.out.println(mensaje);
+            out.writeUTF("Fecha con 10 dias más.");
             sc.close();
         } catch (IOException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
