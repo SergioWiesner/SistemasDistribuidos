@@ -13,7 +13,8 @@ public class Servidor {
         Socket sc = null;
         DataInputStream in;
         DataOutputStream out;
-        final int PUERTO = 5000;
+        final int PUERTO = 43;
+        
         try {
             servidor = new ServerSocket(PUERTO);
             System.out.println("Servidor iniciado");
@@ -25,7 +26,7 @@ public class Servidor {
                 out = new DataOutputStream(sc.getOutputStream());
                 
                 FileWriter flwriter = null;
-                flwriter = new FileWriter("/home/webdev/Documentos/prueba.txt");
+                flwriter = new FileWriter("C:\\Users\\webdev\\Documents\\NetBeansProjects/prueba.txt");
                 BufferedWriter bfwriter = new BufferedWriter(flwriter);
                 
                 String mensaje = in.readUTF(); 

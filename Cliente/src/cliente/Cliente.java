@@ -12,7 +12,7 @@ public class Cliente {
         //Host del servidor
         final String HOST = "127.0.0.1";
         //Puerto del servidor
-        final int PUERTO = 5000;
+        final int PUERTO = 43;
         DataInputStream in;
         DataOutputStream out;
 
