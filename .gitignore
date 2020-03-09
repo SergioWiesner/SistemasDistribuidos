@@ -28,3 +28,5 @@ hs_err_pid*
 /Servidor/build/
 /Cliente/build/
 /CaluloPi/nbproject/private/
+/CaluloPi/dist/
+/CaluloPi/build/
